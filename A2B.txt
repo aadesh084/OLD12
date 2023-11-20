@@ -1,0 +1,223 @@
+TITLE:  Write at least 10 SQL queries on the suitable database application using SQL DML statements.On join subquery and view.
+------------------------------------------------------------------------------------------------------------------------------------------
+CREATE DATABASE emp1
+mysql> CREATE DATABASE emp1;
+Query OK, 1 row affected (0.01 sec)
+mysql> USE emp1;
+Database changed
+
+CREATE TABLE Employee : 
+mysql> CREATE TABLE Employee(Eid INT,EName VARCHAR(20),Address VARCHAR(30),Salary INT,Commision INT);
+Query OK, 0 rows affected (0.03 sec)
+mysql> INSERT INTO Employee VALUES(1,'Umesh','Pune',50000,5000),(2,' Anu ','Pune',48000,3000),(3,'Omkar','Katraj',40000,5000),(4,' Ritesh ','Mumbai',45000,2000),(5,'Om','Goa',48000,3000);
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> INSERT INTO Employee VALUES(6,' Shubham ','Kothrud',40000,NULL),(7,'Mugdha','Sangli',45000,NULL);
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> SELECT * FROM Employee;
++------+----------+---------+--------+-----------+
+| Eid | EName | Address | Salary | Commision |
++------+----------+---------+--------+-----------+
+| 1 | Umesh | Pune | 50000 | 5000 |
+| 2 | Anu | Pune | 48000 | 3000 |
+| 3 | Omkar | Katraj | 40000 | 5000 |
+| 4 | Ritesh | Mumbai | 45000 | 2000 |
+| 5 | Om | Goa | 48000 | 3000 |
+| 6 | Shubham | Kothrud | 40000 | NULL |
+| 7 | Mugdha | Sangli | 45000 | NULL |
++------+----------+---------+--------+-----------+
+7 rows in set (0.00 sec)
+
+CREATE TABLE Project :
+mysql> CREATE TABLE Project(PrNo INT,Addr VARCHAR(30));
+Query OK, 0 rows affected (0.02 sec)
+mysql> INSERT INTO Project VALUES(101,'Pune'),(102,'Pune'),(103,'Katraj'),(104,'Mumbai'),(105,'Goa');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5 Duplicates: 0 Warnings: 0
+mysql> INSERT INTO Project VALUES(106,'Kothrud'),(107,'Sangli');
+Query OK, 2 rows affected (0.01 sec)
+mysql> SELECT * FROM Project;
++------+---------+
+| PrNo | Addr |
++------+---------+
+| 101 | Pune |
+| 102 | Pune |
+| 103 | Katraj |
+| 104 | Mumbai |
+| 105 | Goa |
+| 106 | Kothrud |
+| 107 | Sangli |
++------+---------+
+7 rows in set (0.00 sec)
+
+Query - 
+ 1.FIND DIFFERENT LOCATIONS FROM EMPLOYEES BELONG TO?
+mysql> SELECT Address FROM Employee;
++---------+
+| Address |
++---------+
+| Pune |
+| Pune |
+| Katraj |
+| Mumbai |
+| Goa |
+| Kothrud |
+| Sangli |
++---------+
+7 rows in set (0.00 sec)
+
+2. WHAT IS MINIMUM AND MAXIMUM SALARY?
+mysql> SELECT MAX(Salary) AS Max_Salary, MIN(Salary) AS Min_Salary FROM Employee;
++------------+------------+
+| Max_Salary | Min_Salary |
++------------+------------+
+| 50000 | 40000 |
++------------+------------+
+1 row in set (0.00 sec)
+
+ 3. DISPLAY THE CONTENT OF EMPLOYEE TABLE ACCORDING TO THE ASCENDING ORDER OF SALARY AMOUNT?
+mysql> SELECT *FROM Employee ORDER BY Salary ASC;
++------+----------+---------+--------+-----------+
+| Eid | EName | Address | Salary | Commision |
++------+----------+---------+--------+-----------+
+| 3 | Omkar | Katraj | 40000 | 5000 |
+| 6 | Shubham | Kothrud | 40000 | NULL |
+| 4 | Ritesh | Mumbai | 45000 | 2000 |
+| 7 | Mugdha | Sangli | 45000 | NULL |
+| 2 | Anu | Pune | 48000 | 3000 |
+| 5 | Om | Goa | 48000 | 3000 |
+| 1 | Umesh | Pune | 50000 | 5000 |
++------+----------+---------+--------+-----------+
+7 rows in set (0.00 sec)
+
+4. FIND THE NAME OF EMPLOYEE WHO LIVED IN NASHIK OR PUNE?
+mysql> SELECT EName FROM Employee WHERE Address IN('Nashik','Pune');
++---------+
+| EName |
++---------+
+| Umesh |
+| Anu |
++---------+
+2 rows in set (0.00 sec)
+
+5. FIND NAME OF EMPLOYEE WHO DOES NOT GET COMMISSION?
+mysql> SELECT EName FROM Employee WHERE Commision IS NULL;
++--------+
+| EName |
++--------+
+| Shubham |
+| Mugdha |
++--------+
+2 rows in set (0.00 sec)
+
+6. CHANGE THE CITY OF Anu TO Nashik?
+mysql> UPDATE EMPLOYEE SET Address='Nashik' WHERE EName='Anu';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1 Changed: 1 Warnings: 0
+
+mysql> SELECT *FROM Employee;
++------+----------+---------+--------+-----------+
+| Eid | EName | Address | Salary | Commision |
++------+----------+---------+--------+-----------+
+| 1 | Umesh | Pune | 50000 | 5000 |
+| 2 | Anu | Nashik | 48000 | 3000 |
+| 3 | Omkar | Katraj | 40000 | 5000 |
+| 4 | Ritesh | Mumbai | 45000 | 2000 |
+| 5 | Om | Goa | 48000 | 3000 |
+| 6 | Shubham | Kothrud | 40000 | NULL |
+| 7 | Mugdha | Sangli | 45000 | NULL |
++------+----------+---------+--------+-----------+
+7 rows in set (0.00 sec)
+
+7. FIND THE INFORMATION OF EMPLOYEE WHOSE NAME STARTS WITH ‘R’?
+mysql> SELECT *FROM Employee WHERE EName LIKE 'R%';
++------+---------+---------+--------+-----------+
+| Eid | EName | Address | Salary | Commision |
++------+---------+---------+--------+-----------+
+| 4 | Ritesh | Mumbai | 45000 | 2000 |
++------+---------+---------+--------+-----------+
+1 row in set (0.00 sec)
+
+8.FIND THE COUNT OF STAFF FROM MUMBAI?
+mysql> SELECT COUNT(*) AS Mumbai_Staff_Count FROM Employee WHERE Address ='Mumbai';
++--------------------+
+| Mumbai_Staff_Count |
++--------------------+
+| 1 |
++--------------------+
+1 row in set (0.00 sec)
+
+9.FIND THE COUNT OF STAFF FROM EACH CITY?
+mysql> SELECT Address ,COUNT(*) AS Staff_Count FROM Employee GROUP BY Address;
++---------+-------------+
+| Address | Staff_Count |
++---------+-------------+
+| Pune | 1 |
+| Nashik | 1 |
+| Katraj | 1 |
+| Mumbai | 1 |
+| Goa | 1 |
+| Kothrud | 1 |
+| Sangli | 1 |
++---------+-------------+
+7 rows in set (0.00 sec)
+
+10. FIND THE ADDRESS FROM WHERE EMPLOYEES ARE BELONGING AS WELL AS WHERE PROJECTS ARE GOING ON?
+mysql> SELECT DISTINCT Address FROM(SELECT Address FROM Employee UNION SELECT Addr FROM Project) AS Combined_Locations;
++---------+
+| Address |
++---------+
+| Pune |
+| Nashik |
+| Katraj |
+| Mumbai |
+| Goa |
+| Kothrud |
+| Sangli |
++---------+
+7 rows in set (0.00 sec)
+
+11. FIND CITY WISE MAXIMUM SALARY HAVING MAXIMUM SALARY GREATER THAN 26000?
+mysql> SELECT Address,MAX(Salary) AS Max_Salary FROM Employee GROUP BY Address HAVING MAX(Salary)>26000;
++---------+------------+
+| Address | Max_Salary |
++---------+------------+
+| Pune | 50000 |
+| Nashik | 48000 |
+| Katraj | 40000 |
+| Mumbai | 45000 |
+| Goa | 48000 |
+| Kothrud | 40000 |
+| Sangli | 45000 |
++---------+------------+
+7 rows in set (0.00 sec)
+
+12. FIND CITY WISE MINIMUM SALARY
+mysql> SELECT Address,MIN(Salary) AS Min_salary FROM Employee GROUP BY Address;
++---------+------------+
+| Address | Min_salary |
++---------+------------+
+| Pune | 50000 |
+| Nashik | 48000 |
+| Katraj | 40000 |
+| Mumbai | 45000 |
+| Goa | 48000 |
+| Kothrud | 40000 |
+| Sangli | 45000 |
++---------+------------+
+7 rows in set (0.00 sec)
+
+13.DELETE THE EMPLOYEE WHO IS HAVING SALARY GREATER THAN 45000?
+mysql> DELETE FROM Employee WHERE Salary>45000;
+Query OK, 3 rows affected (0.00 sec)
+mysql> SELECT * FROM Employee;
++------+----------+---------+--------+-----------+
+| Eid | EName | Address | Salary | Commision |
++------+----------+---------+--------+-----------+
+| 3 | Omkar | Katraj | 40000 | 5000 |
+| 4 | Ritesh | Mumbai | 45000 | 2000 |
+| 6 |Shubham| Kothrud | 40000 | NULL |
+| 7 | Mugdha | Sangli | 45000 | NULL |
++------+----------+---------+--------+-----------+
+4 rows in set (0.00 sec)

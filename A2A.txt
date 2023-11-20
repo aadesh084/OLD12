@@ -1,0 +1,336 @@
+TITLE:  Design and Develop SQL DDL statements which demonstrate the use of SQL objects such as Table, View, Index, Sequence, Synonym, different constraints etc.
+//CREATE DATABASE
+mysql> create database A2A;
+Query OK, 1 row affected (0.02 sec)
+
+//SHOW DATABASES
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| A2A                |
+| A4                 |
+| A5                 |
+| A6                 |
+| A7                 |
+| A7O                |
+| Bank               |
+| Stud               |
+| information_schema |
+| library            |
+| mysql              |
+| performance_schema |
+| shubh              |
+| sys                |
+| testDB             |
++--------------------+
+15 rows in set (0.02 sec)
+
+//USE DATABASE
+
+mysql> use A2A;
+Database changed
+
+--TABLE
+
+//CREATE TABLE
+mysql> CREATE TABLE employee (emp_id INT PRIMARY KEY,first_name VARCHAR(50),last_name VARCHAR(50),hire_date DATE,salary DECIMAL(10, 2));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc employee;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| emp_id       | int           | NO   | PRI | NULL    |       |
+| first_name   | varchar(50)   | YES  |     | NULL    |       |
+| last_name    | varchar(50)   | YES  | MUL | NULL    |       |
+| hire_date    | date          | YES  |     | NULL    |       |
+| salary       | decimal(10,2) | YES  |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+//INSERTING VALUE IN TABLE
+mysql> INSERT INTO employee (emp_id, first_name, last_name, hire_date, salary)VALUES (1, 'Umesh', 'Mali', '2023-01-15', 50000.00),(2, 'Swapnil', 'patil', '2023-02-20', 60000.00),(3, 'Anu', 'Patil', '2023-03-25', 55000.00);
+Query OK, 3 rows affected (0.02 sec)
+
+//SHOW TABLE
+mysql> SELECT * FROM employee;
++--------+------------+-----------+------------+----------+
+| emp_id | first_name | last_name | hire_date  | salary   |
++--------+------------+-----------+------------+----------+
+|      1 | Umesh      | Mali      | 2023-01-15 | 50000.00 |
+|      2 | Swapnil    | patil     | 2023-02-20 | 60000.00 |
+|      3 | Anu        | Patil     | 2023-03-25 | 55000.00 |
++--------+------------+-----------+------------+----------+
+3 rows in set (0.01 sec)
+
+//ALTER TABLE
+
+mysql> ALTER TABLE employee ADD COLUMN date_of_birth DATE;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| emp_id        | int           | NO   | PRI | NULL    |       |
+| first_name    | varchar(50)   | YES  |     | NULL    |       |
+| last_name     | varchar(50)   | YES  | MUL | NULL    |       |
+| hire_date     | date          | YES  |     | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
+| department    | varchar(50)   | YES  |     | NULL    |       |
+| emp_location  | varchar(100)  | YES  |     | NULL    |       |
+| date_of_birth | date          | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> ALTER TABLE employee DROP COLUMN date_of_birth;
+mysql> desc employee;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| emp_id       | int           | NO   | PRI | NULL    |       |
+| first_name   | varchar(50)   | YES  |     | NULL    |       |
+| last_name    | varchar(50)   | YES  | MUL | NULL    |       |
+| hire_date    | date          | YES  |     | NULL    |       |
+| salary       | decimal(10,2) | YES  |     | NULL    |       |
+| department   | varchar(50)   | YES  |     | NULL    |       |
+| emp_location | varchar(100)  | YES  |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+7 rows in set (0.02 sec)
+
+
+// TRUNCATE TABLE
+
+mysql> TRUNCATE TABLE employee;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM employee;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO employee (emp_id, first_name, last_name, hire_date, salary)VALUES (1, 'Umesh', 'Mali', '2023-01-15', 50000.00),(2, 'Swapnil', 'patil', '2023-02-20', 60000.00),(3, 'Anu', 'Patil', '2023-03-25', 55000.00);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+// RENAME TABLE
+
+// USING RENAME
+mysql> RENAME TABLE employee TO emp;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> RENAME TABLE emp TO employee;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc employee;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| emp_id       | int           | NO   | PRI | NULL    |       |
+| first_name   | varchar(50)   | YES  |     | NULL    |       |
+| last_name    | varchar(50)   | YES  | MUL | NULL    |       |
+| hire_date    | date          | YES  |     | NULL    |       |
+| salary       | decimal(10,2) | YES  |     | NULL    |       |
+| department   | varchar(50)   | YES  |     | NULL    |       |
+| emp_location | varchar(100)  | YES  |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+// USING ALTER
+mysql> ALTER TABLE employee RENAME TO employees;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM employees;
++--------+------------+-----------+------------+----------+------------+
+| emp_id | first_name | last_name | hire_date  | salary   | department |
++--------+------------+-----------+------------+----------+------------+
+|      1 | Umesh      | Mali      | 2023-01-15 | 50000.00 | NULL       |
+|      2 | Swapnil    | patil     | 2023-02-20 | 60000.00 | NULL       |
+|      3 | Anu        | Patil     | 2023-03-25 | 55000.00 | NULL       |
++--------+------------+-----------+------------+----------+------------+
+3 rows in set (0.01 sec)
+
+mysql> ALTER TABLE employees RENAME TO employee;
+Query OK, 0 rows affected (0.04 sec)
+
+// DROP TABLE
+
+mysql> DROP TABLE employee;
+Query OK, 0 rows affected (0.04 sec)
+
+
+--VIEW
+
+//CREATE VIEW
+mysql> CREATE VIEW employee_view AS SELECT emp_id, first_name, salary FROM employee;
+Query OK, 0 rows affected (0.01 sec)
+
+//SHOW VIEW
+mysql> SELECT * FROM employee_view;
++--------+------------+----------+
+| emp_id | first_name | salary   |
++--------+------------+----------+
+|      1 | Umesh      | 50000.00 |
+|      2 | Swapnil    | 60000.00 |
+|      3 | Anu        | 55000.00 |
++--------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> DESC employee;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| emp_id       | int           | NO   | PRI | NULL    |       |
+| first_name   | varchar(50)   | YES  |     | NULL    |       |
+| last_name    | varchar(50)   | YES  |     | NULL    |       |
+| hire_date    | date          | YES  |     | NULL    |       |
+| salary       | decimal(10,2) | YES  |     | NULL    |       |
+| department   | varchar(50)   | YES  |     | NULL    |       |
+| emp_location | varchar(100)  | YES  |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+7 rows in set (0.04 sec)
+
+
+//DROP VIEW
+mysql> DROP VIEW IF EXISTS employee_view;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC employee;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| emp_id       | int           | NO   | PRI | NULL    |       |
+| first_name   | varchar(50)   | YES  |     | NULL    |       |
+| last_name    | varchar(50)   | YES  |     | NULL    |       |
+| hire_date    | date          | YES  |     | NULL    |       |
+| salary       | decimal(10,2) | YES  |     | NULL    |       |
+| department   | varchar(50)   | YES  |     | NULL    |       |
+| emp_location | varchar(100)  | YES  |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee_view;
+ERROR 1146 (42S02): Table 'A2A.employee_view' doesn't exist
+
+
+--INDEX
+
+//CREATE INDEX
+mysql> CREATE INDEX idx_emp_id ON employee (emp_id);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+//SHOW INDEX
+mysql> SHOW INDEX FROM employee;
++----------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| employee |          0 | PRIMARY    |            1 | emp_id      | A         |           3 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| employee |          1 | idx_emp_id |            1 | emp_id      | A         |           3 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
+//DROP INDEX
+mysql> DROP INDEX idx_emp_id ON employee;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+--SEQUENCE
+MySQL doesn't have a built-in sequence object. Instead, you can use an AUTO_INCREMENT column in a table to achieve similar functionality.
+
+//CREATE SEQUENCE
+CREATE TABLE my_table (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO my_table (name) VALUES ('Umesh');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> desc my_table;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.02 sec)
+
+// SHOW SEQUENCE
+mysql> select *from my_table;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | Umesh |
++----+-------+
+1 row in set (0.00 sec)
+
+// TRUNCATE SEQUENCE
+mysql> TRUNCATE TABLE my_table;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select *from my_table;
+Empty set (0.00 sec)
+
+// DROP  SEQUENCE
+mysql> DROP TABLE my_table;
+Query OK, 0 rows affected (0.01 sec)
+
+
+--CONSTRAINTS :
+
+mysql> CREATE TABLE department1 (dept_id SERIAL PRIMARY KEY,dept_name VARCHAR(100) NOT NULL);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> CREATE TABLE employee1(emp_id SERIAL PRIMARY KEY,first_name VARCHAR(50) NOT NULL,last_name VARCHAR(50) NOT NULL,email VARCHAR(100) UNIQUE,birth_date DATE,hire_date DATE,salary NUMERIC(10, 2) CHECK (salary >= 0),department_id INT REFERENCES department(dept_id),manager_id INT,CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(emp_id),CHECK (hire_date >= birth_date));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc employee1;
++---------------+-----------------+------+-----+---------+----------------+
+| Field         | Type            | Null | Key | Default | Extra          |
++---------------+-----------------+------+-----+---------+----------------+
+| emp_id        | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+| first_name    | varchar(50)     | NO   |     | NULL    |                |
+| last_name     | varchar(50)     | NO   |     | NULL    |                |
+| email         | varchar(100)    | YES  | UNI | NULL    |                |
+| birth_date    | date            | YES  |     | NULL    |                |
+| hire_date     | date            | YES  |     | NULL    |                |
+| salary        | decimal(10,2)   | YES  |     | NULL    |                |
+| department_id | int             | YES  |     | NULL    |                |
+| manager_id    | int             | YES  | MUL | NULL    |                |
++---------------+-----------------+------+-----+---------+----------------+
+9 rows in set (0.02 sec)
+
+mysql> INSERT INTO department (dept_name) VALUES('HR'),('IT'),('Sales');
+Query OK, 3 rows affected (0.01 sec)
+
+
+mysql> SELECT * FROM department;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|       1 | HR        |
+|       2 | IT        |
+|       3 | Sales     |
++---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee1(emp_id, first_name, last_name, email, birth_date, hire_date, salary, department_id, manager_id)VALUES (NULL, 'Umesh', 'Mali', 'umesh@email.com', '1980-01-01', '2023-10-20', 100000, 1, 2);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO employee1(emp_id, first_name, last_name, email, birth_date, hire_date, salary, department_id, manager_id) VALUES (2, 'Nagesh', 'Gholap', 'nagesh@email.com', '1995-01-18', '2020-05-22',
+150000, 2, 3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM employee1;
++--------+------------+-----------+------------------+------------+------------+-----------+---------------+------------+
+| emp_id | first_name | last_name | email            | birth_date | hire_date  | salary    | department_id | manager_id |
++--------+------------+-----------+------------------+------------+------------+-----------+---------------+------------+
+|      1 | Umesh      | Mali      | umesh@email.com  | 1980-01-01 | 2023-10-20 | 100000.00 |             1 |          2 |
+|      2 | Nagesh     | Gholap    | nagesh@email.com | 1995-01-18 | 2020-05-22 | 150000.00 |             2 |          3 |
++--------+------------+-----------+------------------+------------+------------+-----------+---------------+------------+
+2 rows in set (0.01 sec)
+
+
+
+

@@ -1,0 +1,116 @@
+Aim : MongoDB Queries: Design and Develop MongoDB Queries using CRUD operations. (Use CRUD operations, SAVE method, logical operators etc.).
+Swapnil> db.createCollection("Student")
+{ ok: 02 }
+Swapnil> db.student.insertOne({"Roll":02,"Name":"Swapnil"})
+{
+acknowledged: true,
+insertedId: ObjectId("652f60c8a8f02d0502eb7fed025")
+}
+Swapnil>db.student.insertMany([{"Roll":34,"Name":"Ritesh"},{"Roll":05,"Name":"Adesh"}])
+{
+acknowledged: true, insertedIds: {
+'0': ObjectId("652f6052a8f02d0502eb7fed026"),
+'02': ObjectId("652f6052a8f02d0502eb7fed027")
+}
+}
+Swapnil> b.student.find() [
+{
+_id: ObjectId("652f60c8a8f02d0502eb7fed025"), Roll: 02,
+Name: ‘Swapnil'
+},
+{ _id: ObjectId("652f6052a8f02d0502eb7fed026"), Roll: 34, Name: “Ritesh” },
+{
+_id: ObjectId("652f6052a8f02d0502eb7fed027"), Roll: 05,
+Name: ‘Adesh'
+ 
+
+}
+]
+Swapnil> db.student.find().pretty() [
+{
+_id: ObjectId("652f60c8a8f02d0502eb7fed025"), Roll: 02,
+Name: ‘Swapnil'
+},
+{ _id: ObjectId("652f6052a8f02d0502eb7fed026"), Roll: 34, Name: 'Ritesh' },
+{
+_id: ObjectId("652f6052a8f02d0502eb7fed027"), Roll:05 ,
+Name: ‘Adesh'
+}
+]
+Swapnil> db.student.find().pretty() [
+{
+_id: ObjectId("652f60c8a8f02d0502eb7fed025"), Roll: 02,
+Name: ' Swapnil'
+},
+{ _id: ObjectId("652f6052a8f02d0502eb7fed026"), Roll: 34, Name: 'Ritesh' },
+{
+_id: ObjectId("652f6052a8f02d0502eb7fed027"), Roll: 05,
+Name: 'Adesh'
+}
+ 
+
+]
+Swapnil> db.student.find({"Roll":02}).pretty() [
+{
+_id: ObjectId("652f60c8a8f02d0502eb7fed025"), Roll: 02,
+Name: ' Swapnil '
+}
+]
+
+
+02 | db.student.updateOne(
+2 | {"Name":' Swapnil'},
+> 3 | $set: {"Name":'param'}
+|	^
+4 |
+
+
+Swapnil> db.student.updateOne( {"Name":' Swapnil'}, {$set: {"Name":’param'}}
+... )
+{
+acknowledged: true, insertedId: null,
+matchedCount: 02,
+modifiedCount: 02,
+upsertedCount: 0
+}
+Swapnil> db.student.find({"Roll":02}).pretty() [
+{ _id: ObjectId("652f60c8a8f02d0502eb7fed025"), Roll: 02, Name: ' Swapnil' }
+ 
+
+Swapnil> db.student.updateMany({}, { $set: { "Department": 'Computer' } } )
+{
+acknowledged: true, insertedId: null,
+matchedCount: 3,
+modifiedCount: 3,
+upsertedCount: 0
+}
+Swapnil> db.student.find().pretty() [
+{
+_id: ObjectId("652f60c8a8f02d0502eb7fed025"), Roll: 02,
+Name: ' Swapnil', Department: 'Computer'
+},
+{
+_id: ObjectId("652f6052a8f02d0502eb7fed026"), Roll: 34,
+Name: ‘Ritesh', Department: 'Computer'
+},
+{
+_id: ObjectId("652f6052a8f02d0502eb7fed027"), Roll: 05,
+Name: ‘Adesh', Department: 'Computer'
+}
+ 
+
+Swapnil > db.student.deleteOne({ "Name": 'Ritesh' } )
+{ acknowledged: true, deletedCount: 34 } Ritesh> db.student.find().pretty()
+[
+{
+_id: ObjectId("652f60c8a8f02d0502eb7fed025"), Roll: 02,
+Name: ‘Swapnil', Department: 'Computer'
+},
+{
+_id: ObjectId("652f6052a8f02d0502eb7fed027"), Roll: 05,
+Name: ‘Adesh', Department: 'Computer'
+}
+]
+Swapnil> db.student.deleteMany({ "Department": 'Computer' } )
+{ acknowledged: true, deletedCount: 34 } Swapnil> db.student.find().pretty()
+
